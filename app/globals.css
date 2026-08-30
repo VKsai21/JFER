@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  font-family: var(--font-nunito), sans-serif;
+  background-color: #f8f6f2; /* soft cream */
+  color: #1a1a1a; /* deep gray, not pure black */
+}
+
+/* Typography System */
+
+h1 {
+  @apply text-4xl md:text-6xl font-semibold tracking-tight leading-tight;
+}
+nav h1{
+  @apply text-4xl md:text-3xl font-semibold tracking-tight leading-tight;
+}
+h2 {
+  @apply text-3xl font-semibold tracking-tight;
+}
+
+h3 {
+  @apply text-xl font-medium;
+}
+
+p {
+  @apply text-gray-600 leading-relaxed;
+}
+/* Fade Up Animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+.delay-200 {
+  animation-delay: 0.2s;
+}
+.delay-300 {
+  animation-delay: 0.3s;
+}
