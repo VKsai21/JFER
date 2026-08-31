@@ -3062,11 +3062,9 @@ function AuthorList({
                     )}
                   </p>
 
-                  {item.affiliation && (
+                  {typeof item.affiliation === "string" && item.affiliation.trim() && (
                     <p className="!text-[#888888] text-[10px] mt-1">
-                      {String(
-                        item.affiliation
-                      )}
+                      {item.affiliation}
                     </p>
                   )}
 
