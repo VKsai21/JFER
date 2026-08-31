@@ -3068,11 +3068,9 @@ function AuthorList({
                     </p>
                   )}
 
-                  {item.email && (
+                  {typeof item.email === "string" && item.email.trim() && (
                     <p className="!text-[#888888] text-[10px] mt-1">
-                      {String(
-                        item.email
-                      )}
+                      {item.email}
                     </p>
                   )}
 
