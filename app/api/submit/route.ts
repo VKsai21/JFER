@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { adminDb } from "@/lib/FirebaseAdmin";
+import { adminFirestore } from "@/lib/FirebaseAdmin";
 
 export async function POST(request: Request) {
   try {
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const submissionRef = adminDb.collection("submissions").doc();
+    const submissionRef = adminFirestore.collection("submissions").doc();
 
     const paperId = `JFER-${Date.now()}`;
 
