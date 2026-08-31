@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { adminFirestore } from "@/lib/FirebaseAdmin";
-import { Resend } from "resend";
+// import { Resend } from "resend";
 
-const resend = new Resend(
-  process.env.RESEND_API_KEY
-);
+// const resend = new Resend(
+//   process.env.RESEND_API_KEY
+// );
 
 export async function POST(req: Request) {
   try {
@@ -47,36 +47,36 @@ export async function POST(req: Request) {
 
     // Send email notification
 
-    const emailResponse = await resend.emails.send({
-    from: "JFER <noreply@resend.dev>",
-    to: "vivekalajpur@gmail.com",
-    subject: `New Inquiry: ${subject}`,
-    html: `
-        <h2>New Inquiry Received</h2>
+    // const emailResponse = await resend.emails.send({
+    // from: "JFER <noreply@resend.dev>",
+    // to: "vivekalajpur@gmail.com",
+    // subject: `New Inquiry: ${subject}`,
+    // html: `
+    //     <h2>New Inquiry Received</h2>
 
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
+    //     <p><strong>Name:</strong> ${name}</p>
+    //     <p><strong>Email:</strong> ${email}</p>
+    //     <p><strong>Subject:</strong> ${subject}</p>
 
-        <hr/>
+    //     <hr/>
 
-        <p>${message}</p>
+    //     <p>${message}</p>
 
-        <hr/>
+    //     <hr/>
 
-        <p>
-        Inquiry ID:
-        ${inquiryRef.id}
-        </p>
-    `,
-    });
+    //     <p>
+    //     Inquiry ID:
+    //     ${inquiryRef.id}
+    //     </p>
+    // `,
+    // });
 
-    console.log("================================");
-    console.log("EMAIL SENT SUCCESSFULLY");
-    console.log("Recipient:", "shoolinat@gmail.com");
-    console.log("Message ID:", emailResponse?.data?.id);
-    console.log("Full Response:", emailResponse);
-    console.log("================================");
+    // console.log("================================");
+    // console.log("EMAIL SENT SUCCESSFULLY");
+    // console.log("Recipient:", "shoolinat@gmail.com");
+    // console.log("Message ID:", emailResponse?.data?.id);
+    // console.log("Full Response:", emailResponse);
+    // console.log("================================");
 
     return NextResponse.json({
       success: true,
