@@ -6,7 +6,7 @@ import {
 import {
   adminAuth,
   adminFirestore,
-} from "@/lib/firebaseAdmin";
+} from "@/lib/FirebaseAdmin";
 
 import {
   sendReviewerApprovalEmail,
