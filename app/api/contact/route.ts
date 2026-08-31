@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { firestore } from "@/lib/FirebaseAdmin";
+import { adminFirestore } from "@/lib/FirebaseAdmin";
 import { Resend } from "resend";
 
 const resend = new Resend(
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
 
     // Save to Firestore
 
-    const inquiryRef = await firestore
+    const inquiryRef = await adminFirestore
       .collection("inquiries")
       .add({
         name,
