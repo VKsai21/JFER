@@ -1077,7 +1077,7 @@ export default function SubmissionsPage() {
 
       case "Reviewers":
         router.push(
-          "/admin/reviewer"
+          "/admin/reviewers"
         );
         break;
 
