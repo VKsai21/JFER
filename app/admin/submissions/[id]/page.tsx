@@ -3425,7 +3425,7 @@ function AuthorList({
                     </p>
                   )}
 
-                  {item.email && (
+                  {item.email != null && (
 
                     <p className="text-[10px] text-[#999] mt-1">
 
