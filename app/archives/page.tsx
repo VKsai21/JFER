@@ -4,6 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { firestore } from "@/lib/firebase";
 
+type Author = {
+  name?: string;
+  fullName?: string;
+  author?: string;
+};
+
 type Paper = {
   id: string;
   paperId?: string;
@@ -12,7 +18,7 @@ type Paper = {
   title?: string;
 
   author?: string;
-  authors?: string | string[];
+  authors?: string | (string | Author)[];
 
   publishedAt?: string;
   publishedat?: string;
@@ -114,7 +120,8 @@ export default function ArchivesPage() {
             .toLowerCase();
 
           if (
-            (status === "accepted" || status === "published") &&
+            (status === "accepted" ||
+              status === "published") &&
             publicationStatus === "published"
           ) {
             publishedPapers.push({
@@ -145,9 +152,7 @@ export default function ArchivesPage() {
    */
 
   const getYear = (paper: Paper) => {
-    return String(
-      paper.year || "Unknown"
-    );
+    return String(paper.year || "Unknown");
   };
 
   /*
@@ -364,9 +369,7 @@ export default function ArchivesPage() {
    * ==========================================
    */
 
-  const getSortedIssues = (
-    year: string
-  ) => {
+  const getSortedIssues = (year: string) => {
     return Object.keys(
       issueGroups[year] || {}
     ).sort((a, b) => {
@@ -387,6 +390,7 @@ export default function ArchivesPage() {
   /*
    * ==========================================
    * CURRENT ISSUE
+   * ==========================================
    *
    * Latest YEAR + latest ISSUE
    * ==========================================
@@ -783,15 +787,12 @@ export default function ArchivesPage() {
   return (
     <main className="min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-
         <div className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-6 lg:gap-8">
-
           {/* ==================================================
               LEFT SIDEBAR
              ================================================== */}
 
           <aside className="bg-white border border-slate-200 rounded-xl overflow-hidden h-fit lg:sticky lg:top-6">
-
             {/* SIDEBAR HEADER */}
 
             <div className="bg-slate-100 px-5 py-5 border-b border-slate-200">
@@ -801,9 +802,7 @@ export default function ArchivesPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-bold text-slate-800">
-                    
-                  </h2>
+                  <h2 className="text-xl font-bold text-slate-800"></h2>
                 </div>
               </div>
             </div>
@@ -860,9 +859,7 @@ export default function ArchivesPage() {
             {/* PAST ISSUE LIST */}
 
             <div className="pb-4">
-
               {years.map((year) => {
-
                 const yearIssues =
                   pastIssues.filter(
                     (item) =>
@@ -891,7 +888,6 @@ export default function ArchivesPage() {
                     <div className="space-y-1">
                       {yearIssues.map(
                         (item) => {
-
                           const key = `${item.year}|||${item.issue}`;
 
                           const active =
@@ -947,15 +943,12 @@ export default function ArchivesPage() {
              ================================================== */}
 
           <section className="min-w-0">
-
             {/* ISSUE HEADER */}
 
             {activeIssue ? (
               <>
                 <div className="mb-6">
-
                   <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-
                     <div>
                       <p className="text-xs uppercase tracking-[0.25em] font-bold text-cyan-700 mb-2">
                         {selectedArchive ===
@@ -969,9 +962,6 @@ export default function ArchivesPage() {
                         {activeIssue.papers[0]
                           ?.volume ||
                           "—"}{" "}
-                        {/* Number{" "}
-                        {activeIssue.issue} */}
-                        {" "}
                         ({activeIssue.year})
                       </h2>
                     </div>
@@ -987,7 +977,6 @@ export default function ArchivesPage() {
                         ? "article"
                         : "articles"}
                     </div>
-
                   </div>
 
                   <div className="mt-3 h-1 w-20 bg-cyan-700 rounded-full" />
@@ -1000,11 +989,9 @@ export default function ArchivesPage() {
                 {activeIssue.papers
                   .length > 0 ? (
                   <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-
                     {/* TABLE HEADER */}
 
                     <div className="hidden md:grid md:grid-cols-[200px_minmax(0,1fr)_220px] bg-slate-100 border-b border-slate-300 text-slate-700">
-
                       <div className="px-4 py-4 font-semibold text-sm">
                         Paper ID
                       </div>
@@ -1017,7 +1004,6 @@ export default function ArchivesPage() {
                       <div className="px-5 py-4 font-semibold text-sm">
                         DOI
                       </div>
-
                     </div>
 
                     {/* PAPERS */}
@@ -1046,11 +1032,9 @@ export default function ArchivesPage() {
                                 : ""
                             }`}
                           >
-
                             {/* DESKTOP */}
 
                             <div className="hidden md:grid md:grid-cols-[200px_minmax(0,1fr)_220px]">
-
                               {/* PAPER ID */}
 
                               <div className="px-4 py-6 text-slate-700 text-xs">
@@ -1062,7 +1046,6 @@ export default function ArchivesPage() {
                               {/* TITLE + AUTHOR */}
 
                               <div className="px-5 py-6">
-
                                 <h2 className="text-lg font-semibold leading-1 text-cyan-700 group-hover:text-cyan-900">
                                   {paper.title ||
                                     "Untitled Article"}
@@ -1073,13 +1056,11 @@ export default function ArchivesPage() {
                                     paper
                                   )}
                                 </p>
-
                               </div>
 
                               {/* DOI */}
 
                               <div className="px-5 py-6">
-
                                 {doi ? (
                                   <a
                                     href={getDOIUrl(
@@ -1101,17 +1082,13 @@ export default function ArchivesPage() {
                                     —
                                   </span>
                                 )}
-
                               </div>
-
                             </div>
 
                             {/* MOBILE */}
 
                             <div className="md:hidden p-5">
-
                               <div className="flex items-center justify-between mb-3">
-
                                 <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
                                   Paper ID
                                 </span>
@@ -1121,7 +1098,6 @@ export default function ArchivesPage() {
                                     paper
                                   )}
                                 </span>
-
                               </div>
 
                               <h2 className="text-lg font-semibold leading-7 text-cyan-700">
@@ -1136,7 +1112,6 @@ export default function ArchivesPage() {
                               </p>
 
                               <div className="mt-4">
-
                                 <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
                                   DOI
                                 </span>
@@ -1162,16 +1137,12 @@ export default function ArchivesPage() {
                                     —
                                   </span>
                                 )}
-
                               </div>
-
                             </div>
-
                           </button>
                         );
                       }
                     )}
-
                   </div>
                 ) : (
                   <div className="bg-white border border-slate-200 rounded-xl p-12 text-center">
@@ -1194,7 +1165,6 @@ export default function ArchivesPage() {
 
                 {hasMore && (
                   <div className="flex justify-center mt-6">
-
                     <button
                       onClick={() =>
                         setVisibleCount(
@@ -1207,7 +1177,6 @@ export default function ArchivesPage() {
                     >
                       Load More Articles
                     </button>
-
                   </div>
                 )}
 
@@ -1230,7 +1199,6 @@ export default function ArchivesPage() {
                     articles
                   </div>
                 )}
-
               </>
             ) : (
               <div className="bg-white border border-slate-200 rounded-xl p-12 text-center">
@@ -1246,7 +1214,6 @@ export default function ArchivesPage() {
                 </p>
               </div>
             )}
-
           </section>
         </div>
       </div>
